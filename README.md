@@ -40,7 +40,19 @@ This bot works with a single Satisfactory Dedicated Server and will post updates
 <br />
 :man_astronaut: **0** of 4 players online (`1 January 2023 12:50`).
 <br />
-&nbsp;&nbsp;&nbsp;&nbsp;:arrow_left: **Player 2** just left the server after playing for **2 hours and 10 minutes**.
+&nbsp;&nbsp;&nbsp;&nbsp;:arrow_left: **Player 2** just left the server after playing for **2 hours and 10 minutes**. 
+
+**Satisfactory** [BOT] <sub>Today at 10:30</sub>
+<br />
+:man_astronaut: **1** of 4 players online: **Player 1** (`1 January 2023 10:30`).
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;:arrow_right: **Player 1** just joined the server.
+
+**Satisfactory** [BOT] <sub>Today at 12:50</sub>
+<br />
+:man_astronaut: **0** of 4 players online (`1 January 2023 12:50`).
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;:arrow_left: **Player 1** just left the server after playing for **2 hours and 20 minutes**. And you're already gone? Commitment issues?
 
 ### Activity updates
 
@@ -101,6 +113,12 @@ You should use Discord's roles and permissions to control which channels it can 
 
 Be sure to spell the server and channel names exactly as written in Discord.
 
+By default the bot will post your time played.
+
+You can disable this feature by setting the value of `SATISFACTORY_BOT_DISPLAY_PLAYTIME` to `false`. To resive sligtly offensive messages the value of `SATISFACTORY_BOT_DISPLAY_PLAYTIME` and `SATISFACTORY_BOT_DISPLAY_SLIGHTLY_OFFENSIVE_MESSAGE` must be `true`.
+
+The default of `SATISFACTORY_BOT_DISPLAY_SLIGHTLY_OFFENSIVE_MESSAGE` is `false`.
+
 ### What about purging?
 
 By default purging is disabled. When enabled, it will only purge its own messages and it will only purge from the specified channel on the specified server, both of which must be set using `SATISFACTORY_BOT_PURGE_DISCORD_CHANNEL_SERVER_NAME` and `SATISFACTORY_BOT_PURGE_DISCORD_CHANNEL_NAME`.
@@ -130,7 +148,8 @@ If you do not want the bot to purge its old messages, simply leave these values 
 * `SATISFACTORY_BOT_SERVER_MAX_PLAYERS` (Default: `4`) - The maximum number of players the server allows (this should reflect the same number as your server's `MaxPlayers` setting)
 * `SATISFACTORY_BOT_SERVER_PORT` (Default: `7777`) - The Dedicated Server's port
 * `SATISFACTORY_BOT_SERVER_QUERY_TIMEOUT_MS` (Default: `10000`) - The query polling timeout (in milliseconds)
-
+* `SATISFACTORY_BOT_DISPLAY_PLAYTIME` (Default: `true`) - The bot wil send the time played in the discord message. (Try setting to false to disable this feature, doing this will also disable sligthly offensive messages)
+* `SATISFACTORY_BOT_DISPLAY_SLIGHTLY_OFFENSIVE_MESSAGE` (Default: `false`) - The bot will add a slightly offensive message to the discord message based on your total amount played. (Try setting this to `false` to disable this feature)
 Installation
 ------------
 

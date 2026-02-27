@@ -26,6 +26,7 @@ const {
   formatList,
   formatMinutes,
   formatPlayers,
+  getSligtlyOffensiveMessage
 } = require('../src/utils/utils');
 const { getNextPurge, willPurge, purgeOldMessages } = require('../src/utils/purge');
 
@@ -55,11 +56,11 @@ const sendMessage = (message) => {
     client.channels.cache.filter((channel) => (
       // if we do not have a server name, or we do and it matches
       !process.env.SATISFACTORY_BOT_DISCORD_SERVER_NAME
-        || channel.guild.name === process.env.SATISFACTORY_BOT_DISCORD_SERVER_NAME
+      || channel.guild.name === process.env.SATISFACTORY_BOT_DISCORD_SERVER_NAME
     )
       // and if we do not have a channel name, or we do and it matches
       && (!process.env.SATISFACTORY_BOT_DISCORD_CHANNEL_NAME
-          || channel.name === process.env.SATISFACTORY_BOT_DISCORD_CHANNEL_NAME)
+        || channel.name === process.env.SATISFACTORY_BOT_DISCORD_CHANNEL_NAME)
       // channel is a text channel
       && channel.type === ChannelType.GuildText
       // we have permission to view and send
@@ -69,12 +70,12 @@ const sendMessage = (message) => {
         .has(PermissionsBitField.Flags.SendMessages)
       // channel can be sent to
       && channel.send).forEach((channel) => {
-      console.log(`Sending message to: ${channel.guild.name}: ${channel.name}`);
-      channel.send(message)
-        .catch((error) => {
-          console.error(error);
-        });
-    });
+        console.log(`Sending message to: ${channel.guild.name}: ${channel.name}`);
+        channel.send(message)
+          .catch((error) => {
+            console.error(error);
+          });
+      });
   }
 };
 
@@ -299,7 +300,15 @@ client.on('ready', async () => {
                 const playTimeInMinutes = Math
                   .round((new Date().getTime() - leftPlayerJoinTime) / 60000);
                 let string = `:astronaut: **${onlinePlayers.length}** of ${process.env.SATISFACTORY_BOT_SERVER_MAX_PLAYERS} players online${(onlinePlayers.length > 0 ? `: **${formatPlayers(onlinePlayers)}**` : '')} (${getTimestamp()}).\n`;
-                string += `    :arrow_left: **${leftPlayerName}** just left the server after playing for **${formatMinutes(playTimeInMinutes)}**.`;
+                string += `    :arrow_left: **${leftPlayerName}** just left the server`;
+                if (process.env.SATISFACTORY_BOT_DISPLAY_PLAYTIME !== 'false') {
+                  string += ` after playing for **${formatMinutes(playTimeInMinutes)}**.`
+                }
+
+                if (process.env.SATISFACTORY_BOT_DISPLAY_PLAYTIME !== 'false' && process.env.SATISFACTORY_BOT_DISPLAY_SLIGHTLY_OFFENSIVE_MESSAGE !== 'false') {
+                  console.log(process.env.SATISFACTORY_BOT_DISPLAY_SLIGHTLY_OFFENSIVE_MESSAGE)
+                  string += getSligtlyOffensiveMessage(playTimeInMinutes);
+                }
                 sendMessage(string);
                 if (db?.server?.online) {
                   client.user.setActivity(`online: ${getOnlinePlayers(db).length}/${process.env.SATISFACTORY_BOT_SERVER_MAX_PLAYERS}`);
